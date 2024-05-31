@@ -9,8 +9,20 @@ import Foundation
 
 class AppExtensionHTTPClient {
     
+    let bundleId = "ink.geckos.makeithome.MiH-AppExtension-Demo"
+    
     func makeRequest(path: String) -> URL{
-        let url = URL(string: "http://127.0.0.1:19494/appExtension"+path)!
+        var pathWithBundle = path
+        if pathWithBundle.contains("?"){
+            pathWithBundle += "&"
+        }
+        else {
+            pathWithBundle += "?"
+        }
+        
+        pathWithBundle += "bundleId="+bundleId
+        
+        let url = URL(string: "http://127.0.0.1:19494/appExtension"+pathWithBundle)!
         return url
     }
     
@@ -52,11 +64,13 @@ class AppExtensionHTTPClient {
                 }
             }
         }
-         */
+         
+        task.resume()
+        */
     }
     
-    func connect(bundleId:String){
-        let url = makeRequest(path: "/connect?bundleId="+bundleId)
+    func connect(){
+        let url = makeRequest(path: "/connect")
 
         var request = URLRequest(url: url)
 
@@ -71,5 +85,39 @@ class AppExtensionHTTPClient {
 
         task.resume()
 
+    }
+    
+    func setHtmlContent(content: String){
+        let url = makeRequest(path: "/setHtmlContent")
+        
+        var body : [String: Any] = [:]
+        body["content"] = content
+        
+        let request = makePostRequest(url: url, json: body)
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            // Handle the response or error
+            if let error = error {
+                print("Error: \(error)")
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+                print("Invalid response")
+                return
+            }
+            
+            if let data = data {
+                do {
+                    // Parse the JSON response data
+                    let jsonResponse = try JSONSerialization.jsonObject(with: data, options: [])
+                    print("Response JSON: \(jsonResponse)")
+                } catch {
+                    print("Failed to parse JSON response: \(error)")
+                }
+            }
+        }
+        
+        task.resume()
     }
 }

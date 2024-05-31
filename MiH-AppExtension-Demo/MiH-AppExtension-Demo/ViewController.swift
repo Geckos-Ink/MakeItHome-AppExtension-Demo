@@ -24,9 +24,14 @@ class ViewController: NSViewController {
     }
     
     @IBAction func buttonConnectClick(_ sender: Any) {
-        client.connect(bundleId: "ink.geckos.makeithome.MiH-AppExtension-Demo")
+        client.connect()
     }
 
+
+    @IBOutlet var textHtml : NSTextField?
+    @IBAction func buttonSetHTMLClick(_ sender: Any) {
+        client.setHtmlContent(content: textHtml?.stringValue ?? "")
+    }
 
 
 }
