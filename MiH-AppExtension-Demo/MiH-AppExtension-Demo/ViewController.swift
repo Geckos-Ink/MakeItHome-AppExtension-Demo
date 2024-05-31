@@ -13,6 +13,8 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        client.viewController = self
 
         // Do any additional setup after loading the view.
     }

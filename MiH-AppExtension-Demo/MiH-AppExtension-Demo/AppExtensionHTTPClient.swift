@@ -11,6 +11,8 @@ class AppExtensionHTTPClient {
     
     let bundleId = "ink.geckos.makeithome.MiH-AppExtension-Demo"
     
+    var viewController: ViewController?
+    
     func makeRequest(path: String) -> URL{
         var pathWithBundle = path
         if pathWithBundle.contains("?"){
@@ -162,8 +164,12 @@ class AppExtensionHTTPClient {
 
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             if let data = data {
-                //let image = UIImage(data: data)
-                print("response", String(data: data, encoding: .utf8))
+                let response = String(data: data, encoding: .utf8)
+                print("response", response)
+                
+                DispatchQueue.main.async {
+                    self.viewController?.textStatus?.stringValue = response ?? ""
+                }
             } else if let error = error {
                 print("HTTP Request Failed \(error)")
             }
@@ -179,8 +185,12 @@ class AppExtensionHTTPClient {
 
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             if let data = data {
-                //let image = UIImage(data: data)
-                print("response", String(data: data, encoding: .utf8))
+                let response = String(data: data, encoding: .utf8)
+                print("response", response)
+                
+                DispatchQueue.main.async {
+                    self.viewController?.textStatus?.stringValue = response ?? ""
+                }
             } else if let error = error {
                 print("HTTP Request Failed \(error)")
             }
