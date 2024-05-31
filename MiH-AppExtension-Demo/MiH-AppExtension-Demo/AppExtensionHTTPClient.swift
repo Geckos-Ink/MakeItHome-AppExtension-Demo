@@ -120,4 +120,72 @@ class AppExtensionHTTPClient {
         
         task.resume()
     }
+    
+    func sendJSMessage(jsMessage: String){
+        let url = makeRequest(path: "/sendJSMessage")
+        
+        var body : [String: Any] = [:]
+        body["jsMessage"] = jsMessage
+        
+        let request = makePostRequest(url: url, json: body)
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            // Handle the response or error
+            if let error = error {
+                print("Error: \(error)")
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+                print("Invalid response")
+                return
+            }
+            
+            if let data = data {
+                do {
+                    // Parse the JSON response data
+                    let jsonResponse = try JSONSerialization.jsonObject(with: data, options: [])
+                    print("Response JSON: \(jsonResponse)")
+                } catch {
+                    print("Failed to parse JSON response: \(error)")
+                }
+            }
+        }
+        
+        task.resume()
+    }
+    
+    func checkStatus(){
+        let url = makeRequest(path: "/checkStatus")
+
+        var request = URLRequest(url: url)
+
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let data = data {
+                //let image = UIImage(data: data)
+                print("response", String(data: data, encoding: .utf8))
+            } else if let error = error {
+                print("HTTP Request Failed \(error)")
+            }
+        }
+
+        task.resume()
+    }
+    
+    func waitForStatus(){
+        let url = makeRequest(path: "/waitForStatus")
+
+        var request = URLRequest(url: url)
+
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let data = data {
+                //let image = UIImage(data: data)
+                print("response", String(data: data, encoding: .utf8))
+            } else if let error = error {
+                print("HTTP Request Failed \(error)")
+            }
+        }
+
+        task.resume()
+    }
 }
