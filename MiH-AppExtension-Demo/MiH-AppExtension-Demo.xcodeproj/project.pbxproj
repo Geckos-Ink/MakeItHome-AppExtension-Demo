@@ -11,6 +11,7 @@
 		8B11BBBC2C09CAA300E46355 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B11BBBB2C09CAA300E46355 /* ViewController.swift */; };
 		8B11BBBE2C09CAA600E46355 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B11BBBD2C09CAA600E46355 /* Assets.xcassets */; };
 		8B11BBC12C09CAA600E46355 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 8B11BBC02C09CAA600E46355 /* Base */; };
+		8B11BBCB2C09D27900E46355 /* AppExtensionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B11BBCA2C09D27900E46355 /* AppExtensionHTTPClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		8B11BBBD2C09CAA600E46355 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8B11BBC02C09CAA600E46355 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8B11BBC22C09CAA600E46355 /* MiH_AppExtension_Demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MiH_AppExtension_Demo.entitlements; sourceTree = "<group>"; };
+		8B11BBCA2C09D27900E46355 /* AppExtensionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExtensionHTTPClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				8B11BBBD2C09CAA600E46355 /* Assets.xcassets */,
 				8B11BBBF2C09CAA600E46355 /* Main.storyboard */,
 				8B11BBC22C09CAA600E46355 /* MiH_AppExtension_Demo.entitlements */,
+				8B11BBCA2C09D27900E46355 /* AppExtensionHTTPClient.swift */,
 			);
 			path = "MiH-AppExtension-Demo";
 			sourceTree = "<group>";
@@ -133,6 +136,7 @@
 			files = (
 				8B11BBBC2C09CAA300E46355 /* ViewController.swift in Sources */,
 				8B11BBBA2C09CAA300E46355 /* AppDelegate.swift in Sources */,
+				8B11BBCB2C09D27900E46355 /* AppExtensionHTTPClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

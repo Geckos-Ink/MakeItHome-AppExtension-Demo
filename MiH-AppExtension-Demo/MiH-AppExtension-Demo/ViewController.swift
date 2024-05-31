@@ -9,6 +9,8 @@ import Cocoa
 
 class ViewController: NSViewController {
 
+    let client : AppExtensionHTTPClient = AppExtensionHTTPClient()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,6 +22,11 @@ class ViewController: NSViewController {
         // Update the view, if already loaded.
         }
     }
+    
+    @IBAction func buttonConnectClick(_ sender: Any) {
+        client.connect()
+    }
+
 
 
 }
