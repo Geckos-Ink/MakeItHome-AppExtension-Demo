@@ -24,7 +24,7 @@ class ViewController: NSViewController {
     }
     
     @IBAction func buttonConnectClick(_ sender: Any) {
-        client.connect()
+        client.connect(bundleId: "ink.geckos.makeithome.MiH-AppExtension-Demo")
     }
 
 
