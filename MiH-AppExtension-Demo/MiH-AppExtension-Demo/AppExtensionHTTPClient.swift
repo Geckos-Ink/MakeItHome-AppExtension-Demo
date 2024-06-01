@@ -7,9 +7,36 @@
 
 import Foundation
 
+func jsonStringToDictionary(jsonString: String) -> [String: Any?]? {
+    // Convert the JSON string to Data
+    guard let jsonData = jsonString.data(using: .utf8) else {
+        print("Failed to convert JSON string to Data")
+        return nil
+    }
+    
+    do {
+        // Deserialize the JSON data into a dictionary
+        if let jsonDict = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
+            // Convert the dictionary to [String: Any?]
+            var resultDict: [String: Any?] = [:]
+            for (key, value) in jsonDict {
+                resultDict[key] = value
+            }
+            return resultDict
+        } else {
+            print("Failed to cast JSON object to [String: Any?]")
+            return nil
+        }
+    } catch {
+        print("Error deserializing JSON data: \(error)")
+        return nil
+    }
+}
+
 class AppExtensionHTTPClient {
     
     let bundleId = "ink.geckos.makeithome.MiH-AppExtension-Demo"
+    var secret : String? = nil
     
     var viewController: ViewController?
     
@@ -23,6 +50,10 @@ class AppExtensionHTTPClient {
         }
         
         pathWithBundle += "bundleId="+bundleId
+        
+        if self.secret != nil {
+            pathWithBundle += "&secret="+secret!
+        }
         
         let url = URL(string: "http://127.0.0.1:19494/appExtension"+pathWithBundle)!
         return url
@@ -79,7 +110,35 @@ class AppExtensionHTTPClient {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             if let data = data {
                 //let image = UIImage(data: data)
-                print("response", String(data: data, encoding: .utf8))
+                let strResp = String(data: data, encoding: .utf8)
+                print("response", strResp)
+                
+                if strResp != nil {
+                    let resp = jsonStringToDictionary(jsonString: strResp!)
+                    
+                    if resp == nil {
+                        print("!!! connect: Invalid JSON response")
+                        return
+                    }
+                    
+                    // secret
+                    let secret = resp!["secret"] as? String
+                    
+                    if secret == nil {
+                        print("!!! connect: secret is missing")
+                        return
+                    }
+                    
+                    self.secret = secret
+                    
+                    print("Successfully connected")
+                    
+                }
+                else {
+                    print("!!! connect: EMPTY RESPONSE !!!")
+                }
+                
+                
             } else if let error = error {
                 print("HTTP Request Failed \(error)")
             }
