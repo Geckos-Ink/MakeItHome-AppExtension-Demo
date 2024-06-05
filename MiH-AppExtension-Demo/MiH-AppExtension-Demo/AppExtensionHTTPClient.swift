@@ -33,6 +33,16 @@ func jsonStringToDictionary(jsonString: String) -> [String: Any?]? {
     }
 }
 
+func encodeToBase64(_ input: String) -> String? {
+    // Convert the input string to Data
+    if let data = input.data(using: .utf8) {
+        // Encode the Data to a Base64 string
+        return data.base64EncodedString()
+    }
+    // Return nil if the string could not be converted to Data
+    return nil
+}
+
 class AppExtensionHTTPClient {
     
     let bundleId = "ink.geckos.makeithome.MiH-AppExtension-Demo"
@@ -152,7 +162,7 @@ class AppExtensionHTTPClient {
         let url = makeRequest(path: "/setHtmlContent")
         
         var body : [String: Any] = [:]
-        body["content"] = content
+        body["content"] = encodeToBase64(content)
         
         let request = makePostRequest(url: url, json: body)
         
